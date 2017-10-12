@@ -1,0 +1,70 @@
+info:
+  component: Zuul Server
+  
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+zuul:
+ # prefix: /api
+ # stripPrefix: false
+  sslHostnameValidationEnabled: false
+  debug:
+    request: true
+  routes:
+    organization-service:
+      path: /api/org/**
+      serviceId: organization-microservice
+      stripPrefix: false
+    emptycontainer-service:
+      path: /api/emptycontainer/**
+      serviceId: emptycontainer-microservice
+      stripPrefix: false
+    jobsummary-service:
+      path: /api/jobsummary/**
+      serviceId: jobsummary-microservice
+      stripPrefix: false
+    joborder-service:
+      path: /api/joborder/**
+      serviceId: joborder-microservice
+      stripPrefix: false
+    unifiedinbox-service:
+      path: /api/uninbox/**
+      serviceId: unifiedinbox-microservice
+      stripPrefix: false
+    workflow-service:
+      path: /api/workflow/**
+      serviceId: workflow-microservice
+      stripPrefix: false
+    auth-service:
+      path: /api/identity/**
+      serviceId: auth-microservice
+      stripPrefix: false
+    sms-service:
+      path: /api/smssend/**
+      serviceId: sms-microservice
+      stripPrefix: false
+    zuulserver: /self/**
+
+
+eureka:
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+ribbon:
+  eureka:
+    enabled: true
+
+server:
+  port: ${SERVER_PORT}
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
